@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+
+<script>
+(async function () {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    const isLibya = data.country_code === "LY";
+    const isAndroid = /Android/i.test(navigator.userAgent);
+
+    if (!(isLibya && isAndroid)) {
+      window.location.replace("https://superwork61-creator.github.io/balenformen/");
+    }
+  } catch (e) {
+    window.location.replace("https://superwork61-creator.github.io/balenformen/");
+  }
+})();
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔥 BALEN FOR MEN | الحل الناري لصلابة استثنائية</title>
@@ -1011,4 +1030,5 @@
         });
     </script>
 </body>
+
 </html>
