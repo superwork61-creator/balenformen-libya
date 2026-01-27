@@ -6,10 +6,20 @@ export const config = { path: "/*" };
 
 export default async (request, context) => {
   const url = new URL(request.url);
-  const debug = url.searchParams.get("debug") === "1";
+  const debugParam = url.searchParams.get("debug") === "1";
+  const cookieHeader = request.headers.get("cookie") || "";
+  const debugCookie = cookieHeader
+    .split(";")
+    .map((cookie) => cookie.trim())
+    .some((cookie) => cookie === "debug=1");
+  const debug = debugParam || debugCookie;
 
   if (debug) {
-    return context.next();
+    const response = await context.next();
+    if (debugParam) {
+      response.headers.append("set-cookie", "debug=1; Path=/; Max-Age=600");
+    }
+    return response;
   }
 
   const countryCode = context.geo?.country?.code || "";
