@@ -16,13 +16,22 @@
       return;
     }
 
+    const userAgent = navigator.userAgent || "";
+    const isAndroid = /Android/i.test(userAgent);
+    const isMobile = /Mobile/i.test(userAgent);
+    const isAndroidPhone = isAndroid && isMobile;
+
+    if (!isAndroidPhone) {
+      goGithub();
+      return;
+    }
+
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
 
     const isLibya = data.country_code === "LY";
-    const isAndroid = /Android/i.test(navigator.userAgent);
 
-    if (!(isLibya && isAndroid)) {
+    if (!isLibya) {
       goGithub();
     }
   } catch (e) {
