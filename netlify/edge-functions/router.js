@@ -5,6 +5,13 @@ function isAndroidPhone(ua) {
 export const config = { path: "/*" };
 
 export default async (request, context) => {
+  const url = new URL(request.url);
+  const debug = url.searchParams.get("debug") === "1";
+
+  if (debug) {
+    return context.next();
+  }
+
   const countryCode = context.geo?.country?.code || "";
   const ua = request.headers.get("user-agent") || "";
 
